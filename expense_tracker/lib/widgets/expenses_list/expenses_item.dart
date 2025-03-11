@@ -28,7 +28,7 @@ class ExpenseItem extends StatelessWidget {
             const SizedBox(height: 8), 
             Row(
               children: [
-                Icon(categoryIcons[expense.category] as IconData?),
+                Icon(categoryIcons[expense.category]),
                 const SizedBox(width: 8),
                 Text(
                   DateFormat.yMMMd().format(expense.date), 
