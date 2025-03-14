@@ -1,0 +1,53 @@
+import 'package:flutter/material.dart';
+
+class NewExpense extends StatefulWidget {
+  const NewExpense({super.key});
+
+  @override
+  State<NewExpense> createState() {
+    return _NewExpenseState();
+  }
+}
+
+class _NewExpenseState extends State<NewExpense> {
+  final _titleController = TextEditingController();
+  final _amountController = TextEditingController();
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _amountController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        children: [
+          TextField(
+            controller: _titleController,
+            maxLength: 50,
+            keyboardType: TextInputType.text,
+            decoration: InputDecoration(labelText: 'Title'),
+          ),
+          TextField(
+            controller: _amountController,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              prefixText: '\$',
+              labelText: 'Amount'),
+          ),
+          Row(children: [
+            TextButton(onPressed: () {}, child: const Text('Cancel')),
+            ElevatedButton(onPressed: () {
+              print(_titleController.text);
+              print(_amountController.text);
+            }, child: const Text('save Expense')),
+          ],)
+        ],
+      )
+    );
+  }
+}
