@@ -8,7 +8,7 @@ class Expenses extends StatefulWidget {
 
   @override
   State<Expenses> createState() {
-    return _ExpensesState();
+    return _ExpensesState();                 // this will return the state
   }
 }
 
@@ -24,16 +24,39 @@ class _ExpensesState extends State<Expenses> {
       title: 'Groceries',
       amount: 500.0,
       date: DateTime.now(),
-      category: Category.food,
+      category: Category.food,                // this is the initial data
     ),
   ];
 
   void _openAddExpenseOverlay() {
-    showModalBottomSheet(context: context, builder: (ctx) => NewExpense());
+    showModalBottomSheet(
+      isScrollControlled: true,   // this will make the bottom sheet full screen
+      context: context,
+      builder: (ctx) => NewExpense(onAddExpense: _addExpense), // this will show the bottom sheet
+    );
+  }
+
+  void _addExpense(Expense expense) {
+    setState(() {
+      _registeredExpenses.add(expense);
+    }); // this will rebuild the widget
+  }
+
+  void _removeExpense(Expense expense) {
+    setState(() {
+      _registeredExpenses.remove(expense);
+    }); // this will rebuild the widget
   }
 
   @override
   Widget build(BuildContext context) {
+    Widget mainContent = const Center(
+      child: Text('No expenses added yet!'),
+    ); // if there are no expenses, then show this
+
+    if (_registeredExpenses.isNotEmpty) {
+      mainContent = ExpenseList(expenses: _registeredExpenses, onRemoveExpense: _removeExpense);
+    } // if there are expenses, then show them
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -43,14 +66,14 @@ class _ExpensesState extends State<Expenses> {
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
-            onPressed: _openAddExpenseOverlay,
+            onPressed: _openAddExpenseOverlay, // this will open the bottom sheet
           ),
         ],
       ),
       body: Column(
         children: [
           const Text('The chart will go here!'),
-          Expanded(child: ExpenseList(expenses: _registeredExpenses)),
+          Expanded(child: mainContent), // this will take the remaining space
         ],
       ),
     );
