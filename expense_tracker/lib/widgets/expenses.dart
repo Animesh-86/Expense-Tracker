@@ -8,7 +8,7 @@ class Expenses extends StatefulWidget {
 
   @override
   State<Expenses> createState() {
-    return _ExpensesState();                 // this will return the state
+    return _ExpensesState(); // this will return the state
   }
 }
 
@@ -24,15 +24,18 @@ class _ExpensesState extends State<Expenses> {
       title: 'Groceries',
       amount: 500.0,
       date: DateTime.now(),
-      category: Category.food,                // this is the initial data
+      category: Category.food, // this is the initial data
     ),
   ];
 
   void _openAddExpenseOverlay() {
     showModalBottomSheet(
-      isScrollControlled: true,   // this will make the bottom sheet full screen
+      isScrollControlled: true, // this will make the bottom sheet full screen
       context: context,
-      builder: (ctx) => NewExpense(onAddExpense: _addExpense), // this will show the bottom sheet
+      builder:
+          (ctx) => NewExpense(
+            onAddExpense: _addExpense,
+          ), // this will show the bottom sheet
     );
   }
 
@@ -43,9 +46,27 @@ class _ExpensesState extends State<Expenses> {
   }
 
   void _removeExpense(Expense expense) {
+    final expenseIndex = _registeredExpenses.indexOf(expense);
     setState(() {
       _registeredExpenses.remove(expense);
     }); // this will rebuild the widget
+    ScaffoldMessenger.of(
+      context,
+    ).clearMaterialBanners(); // this will remove the undo banner
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: const Duration(seconds: 2), // this will show a snackbar
+        content: const Text('Expense removed!'),
+        action: SnackBarAction(
+          label: 'UNDO', // undo button
+          onPressed: () {
+            setState(() {
+              _registeredExpenses.insert(expenseIndex, expense);
+            });
+          },
+        ), // this will show a snackbar
+      ),
+    );
   }
 
   @override
@@ -55,7 +76,10 @@ class _ExpensesState extends State<Expenses> {
     ); // if there are no expenses, then show this
 
     if (_registeredExpenses.isNotEmpty) {
-      mainContent = ExpenseList(expenses: _registeredExpenses, onRemoveExpense: _removeExpense);
+      mainContent = ExpenseList(
+        expenses: _registeredExpenses,
+        onRemoveExpense: _removeExpense,
+      );
     } // if there are expenses, then show them
     return Scaffold(
       appBar: AppBar(
@@ -66,7 +90,8 @@ class _ExpensesState extends State<Expenses> {
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
-            onPressed: _openAddExpenseOverlay, // this will open the bottom sheet
+            onPressed:
+                _openAddExpenseOverlay, // this will open the bottom sheet
           ),
         ],
       ),
