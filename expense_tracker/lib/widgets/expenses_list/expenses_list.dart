@@ -14,13 +14,13 @@ class ExpenseList extends StatelessWidget {
     return ListView.builder(
       itemCount: expenses.length,
       itemBuilder:
-          (ctx, index) => Dismissible(
-            key: ValueKey(expenses[index]),
+          (ctx, index) => Dismissible(           // Dismissible is a widget that can be swiped away
+            key: ValueKey(expenses[index]),         // key is used to identify the widget
             background: Container(
               color: Theme.of(context).colorScheme.error,
               margin: EdgeInsets.symmetric(horizontal: Theme.of(context).cardTheme.margin!.horizontal),
             ),    // this will use the card theme margin set in main.dart
-            onDismissed: (direction) => onRemoveExpense(expenses[index]),
+            onDismissed: (direction) => onRemoveExpense(expenses[index]),  // on swipping, the expense will be removed
             child: ExpenseItem(expenses[index]),
           ), // after swipping, it will be removed
     ); //makes scrollable list

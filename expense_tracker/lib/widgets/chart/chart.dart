@@ -18,11 +18,11 @@ class Chart extends StatelessWidget {
   }
 
   double get maxTotalExpense {
-    double maxTotalExpense = 0;
+    double maxTotalExpense = 0;      // Initialize the maxTotalExpense variable to 0
 
     for (final bucket in buckets) {
-      if (bucket.totalExpenses > maxTotalExpense) {
-        maxTotalExpense = bucket.totalExpenses;
+      if (bucket.totalExpenses > maxTotalExpense) {   // Check if the total expenses for the current bucket are greater than the current max
+        maxTotalExpense = bucket.totalExpenses;    // If so, update the maxTotalExpense variable
       }
     }
 

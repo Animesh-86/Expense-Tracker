@@ -46,10 +46,10 @@ class _NewExpenseState extends State<NewExpense> {
     if (_titleController.text.trim().isEmpty ||
         amountIsInvalid ||
         _selectedDate == null) {
-      showDialog(
+      showDialog(      // showDialog is a method that shows a dialog box
         context: context,
         builder:
-            (ctx) => AlertDialog(
+            (ctx) => AlertDialog(     // AlertDialog is a dialog box that shows a title, content and actions
               title: const Text('invalid input'),
               content: const Text(
                 'Please make sure a valid title, amount, date and category was entered',
@@ -57,7 +57,7 @@ class _NewExpenseState extends State<NewExpense> {
               actions: [
                 TextButton(
                   onPressed: () {
-                    Navigator.pop(ctx);
+                    Navigator.pop(ctx);    // Navigator.pop(ctx) closes the dialog box
                   },
                   child: const Text('Okay'),
                 ),
