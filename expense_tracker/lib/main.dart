@@ -2,34 +2,63 @@ import 'package:flutter/material.dart';
 import 'package:expense_tracker/widgets/expenses.dart';
 
 var kColorScheme = ColorScheme.fromSeed(
-  seedColor: const Color.fromARGB(255, 237, 190, 87),
-); // This will create a color scheme
+  seedColor: const Color.fromARGB(255, 237, 190, 87), // Warm golden light theme
+);
+
+var kDarkColorScheme = ColorScheme.fromSeed(
+  brightness: Brightness.dark,
+  seedColor: const Color(0xFF5D4037), // Warm dark brown (Deep Amber) for dark mode
+);
 
 void main() {
   runApp(
     MaterialApp(
-      theme: ThemeData(
-        colorScheme: kColorScheme,
+      debugShowCheckedModeBanner: false,
+      darkTheme: ThemeData.dark().copyWith(
+        colorScheme: kDarkColorScheme,
         appBarTheme: AppBarTheme().copyWith(
-          backgroundColor: kColorScheme.primaryContainer,   // this will change the app bar color
+          backgroundColor: kDarkColorScheme.primaryContainer,
         ),
-        cardTheme: const CardTheme().copyWith(
-          color: kColorScheme.secondaryContainer,
-          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5), // this will change the card color
+        cardTheme: CardTheme(
+          color: kDarkColorScheme.secondaryContainer,
+          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: kColorScheme.primaryContainer,  // this will change the button color
+            backgroundColor: kDarkColorScheme.primaryContainer,
+          ),
+        ),
+        textTheme: ThemeData.dark().textTheme.copyWith(
+          titleLarge: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: kDarkColorScheme.onPrimaryContainer,
+          ),
+        ),
+      ),
+      theme: ThemeData(
+        colorScheme: kColorScheme,
+        appBarTheme: AppBarTheme().copyWith(
+          backgroundColor: kColorScheme.primaryContainer,
+        ),
+        cardTheme: CardTheme(
+          color: kColorScheme.secondaryContainer,
+          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: kColorScheme.primaryContainer,
           ),
         ),
         textTheme: ThemeData().textTheme.copyWith(
-              titleLarge: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.normal,
-                color: kColorScheme.onSecondaryContainer,  // this will change the text color
-              ),
-            ),
+          titleLarge: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: kColorScheme.onPrimaryContainer,
+          ),
+        ),
       ),
+      themeMode: ThemeMode.system,
       home: const Expenses(),
     ),
   );
