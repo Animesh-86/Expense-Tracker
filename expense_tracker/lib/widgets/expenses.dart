@@ -31,6 +31,7 @@ class _ExpensesState extends State<Expenses> {
 
   void _openAddExpenseOverlay() {
     showModalBottomSheet(
+      useSafeArea: true,              // left space for camera ...
       isScrollControlled: true, // this will make the bottom sheet full screen
       context: context,
       builder:
@@ -72,6 +73,7 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     Widget mainContent = const Center(
       child: Text('No expenses added yet!'),
     ); // if there are no expenses, then show this
@@ -96,12 +98,28 @@ class _ExpensesState extends State<Expenses> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Chart(expenses: _registeredExpenses), // this will show the chart
-          Expanded(child: mainContent), // this will take the remaining space
-        ],
-      ),
+      body:
+          width < 600
+              ? Column(
+                children: [
+                  Chart(
+                    expenses: _registeredExpenses,
+                  ), // this will show the chart
+                  Expanded(
+                    child: mainContent,
+                  ), // this will take the remaining space
+                ],
+              )
+              : Row(
+                children: [
+                  Expanded(
+                    child: Chart(expenses: _registeredExpenses),
+                  ), // this will show the chart
+                  Expanded(
+                    child: mainContent,
+                  ), // this will take the remaining space
+                ],
+              ),
     );
   }
 }

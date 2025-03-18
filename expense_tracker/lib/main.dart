@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:expense_tracker/widgets/expenses.dart';
 
 var kColorScheme = ColorScheme.fromSeed(
-  seedColor: const Color.fromARGB(255, 237, 190, 87), // Warm golden light theme
+  seedColor: const Color.fromARGB(255, 234, 106, 89), // Warm golden light theme
 );
 
 var kDarkColorScheme = ColorScheme.fromSeed(
